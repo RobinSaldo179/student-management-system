@@ -1,0 +1,9 @@
+{
+  "name": "student-management-system",
+  "version": "1.0.0",
+  "scripts": {
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start",
+    "install:all": "cd frontend && npm install && cd ../backend && npm install"
+  }
+}
