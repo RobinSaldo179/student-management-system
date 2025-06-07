@@ -15,6 +15,7 @@ function App() {
   const [editingGrade, setEditingGrade] = useState(null);
   const [subjectFilter, setSubjectFilter] = useState('');
   const [searchTerm, setSearchTerm] = useState(''); // New state for search
+  const [backendStarting, setBackendStarting] = useState(false);
 
   useEffect(() => {
     fetchStudents();
@@ -29,20 +30,22 @@ function App() {
       // Show loading
       setLoading(true);
       document.getElementById('loading').style.display = 'flex';
+      setBackendStarting(true);
 
-      // Test backend connection
-      await axios.get(`${API_URL}`);
+      // Test backend connection with timeout
+      await axios.get(`${API_URL}`, { timeout: 30000 }); // 30 second timeout
       
       // Fetch students
       const response = await axios.get(`${API_URL}/api/students`);
       console.log('Students data:', response.data);
       setStudents(response.data);
+      setBackendStarting(false);
       
       // Hide loading
       document.getElementById('loading').style.display = 'none';
     } catch (err) {
       console.error('API Error:', err);
-      setError(err.message);
+      setError('Backend is starting up, please wait 1-2 minutes and try again.');
       document.getElementById('app-error').style.display = 'block';
     } finally {
       setLoading(false);
@@ -249,6 +252,13 @@ function App() {
       {error && (
         <div className="alert alert-danger" role="alert">
           <i className="fas fa-exclamation-circle me-2"></i>{error}
+        </div>
+      )}
+
+      {backendStarting && (
+        <div className="alert alert-info" role="alert">
+          <i className="fas fa-info-circle me-2"></i>
+          Backend is starting up (this may take 1-2 minutes)...
         </div>
       )}
 
