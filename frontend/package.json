@@ -10,7 +10,7 @@
     "axios": "^1.6.2"
   },
   "scripts": {
-    "start": "set PORT=3000 && set REACT_APP_API_URL=http://localhost:5000 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
