@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
 
-const API_URL = 'https://student-management-backend-2kxs.onrender.com'; // Copy your Render URL here
+const API_URL = 'https://student-management-system-ph2o.onrender.com'; // Copy your Render URL here
 
 function App() {
   const [students, setStudents] = useState([]);
