@@ -23,29 +23,23 @@ function App() {
 
   const fetchStudents = async () => {
     try {
-      // Hide any previous error
       setError(null);
-      document.getElementById('app-error').style.display = 'none';
-      
-      // Show loading
       setLoading(true);
-      document.getElementById('loading').style.display = 'flex';
       setBackendStarting(true);
 
-      // Test backend connection with timeout
-      await axios.get(`${API_URL}`, { timeout: 30000 }); // 30 second timeout
+      // Test backend with longer timeout
+      await axios.get(`${API_URL}`, { timeout: 60000 }); // 60 second timeout
       
-      // Fetch students
       const response = await axios.get(`${API_URL}/api/students`);
-      console.log('Students data:', response.data);
       setStudents(response.data);
       setBackendStarting(false);
-      
-      // Hide loading
       document.getElementById('loading').style.display = 'none';
     } catch (err) {
       console.error('API Error:', err);
-      setError('Backend is starting up, please wait 1-2 minutes and try again.');
+      const errorMessage = err.code === 'ECONNABORTED' 
+        ? 'Backend is still starting up. Please wait and refresh in 1-2 minutes.'
+        : 'Failed to connect to server. Please try again.';
+      setError(errorMessage);
       document.getElementById('app-error').style.display = 'block';
     } finally {
       setLoading(false);
@@ -257,8 +251,14 @@ function App() {
 
       {backendStarting && (
         <div className="alert alert-info" role="alert">
-          <i className="fas fa-info-circle me-2"></i>
-          Backend is starting up (this may take 1-2 minutes)...
+          <i className="fas fa-sync-alt me-2"></i>
+          Backend is starting up... This may take 1-2 minutes.
+          <button 
+            className="btn btn-outline-primary btn-sm ms-3"
+            onClick={() => window.location.reload()}
+          >
+            Retry Connection
+          </button>
         </div>
       )}
 

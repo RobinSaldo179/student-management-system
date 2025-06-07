@@ -42,14 +42,18 @@
   </head>
   <body>
     <div id="loading">
-      <div class="spinner-border text-light" role="status">
-        <span class="visually-hidden">Loading...</span>
+      <div class="text-center">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-2">Connecting to server...</p>
+        <small class="text-muted">First load may take 1-2 minutes</small>
       </div>
     </div>
     <div id="root"></div>
     <div id="app-error" class="app-error">
       <h4>Connection Error</h4>
-      <p>Cannot connect to server. Please check if backend is running.</p>
+      <p>Cannot connect to server. Please wait 1-2 minutes and try again.</p>
       <button class="btn btn-primary" onclick="window.location.reload()">
         Retry Connection
       </button>
